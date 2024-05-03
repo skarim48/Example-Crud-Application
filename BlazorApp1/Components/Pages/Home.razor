@@ -1,0 +1,106 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<script>
+    function alerto(){
+        alert('Done!');
+    }
+
+    function alertwarning(){
+        alert('Warning!');
+    }
+</script>
+
+
+<PageTitle>Home</PageTitle>
+@if(!IsAuthenticatedAtt){
+    <h2>Create User</h2>
+    <p>UserName : </p>
+    <input type="Text" @bind="newUser.UserName" />
+    <p>Email : </p>
+    <input type="Text" @bind="newUser.Email" />
+    <p>Password : </p>
+    <input type="Text" @bind="newUser.PasswordHash" />
+    <button class="btn btn-primary" @onclick="CreateUser" >Create</button>
+}
+@if(IsAuthenticatedAtt){
+<button class="btn btn-primary" @onclick="LogOut" >Log Out</button>
+}
+<hr/>
+@if(!IsAuthenticatedAtt){
+    <h2>Login</h2>
+    <p>UserName : </p>
+    <input type="Text" @bind="LoginUser.UserName" />
+    <p>Password : </p>
+    <input type="Text" @bind="LoginUser.PasswordHash" />
+    <button class="btn btn-primary" @onclick="Login" >Login</button>
+
+}
+
+
+@code{
+    bool IsAuthenticatedAtt = false;
+    @inject IJSRuntime jsRuntime
+    Microsoft.AspNetCore.Identity.IdentityUser LoginUser= new Microsoft.AspNetCore.Identity.IdentityUser(){
+        UserName="",
+        PasswordHash="Samir1559$"
+    };
+    Microsoft.AspNetCore.Identity.IdentityUser newUser= new Microsoft.AspNetCore.Identity.IdentityUser(){
+    UserName="",
+    Email="samir@samir.com",
+    PasswordHash="Samir1559$"
+    };
+
+    ModelProject.CallingAPIs.UsersApis usersApis= new ModelProject.CallingAPIs.UsersApis();
+
+    @inject IJSRuntime jsRuntime
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsAuthenticated();
+    }
+
+    private async void CreateUser()
+    {
+        ModelProject.JWT.LocalStorageService _LocalStorageService= new ModelProject.JWT.LocalStorageService(jsRuntime);
+        var token = usersApis.CreateUser(newUser);
+        if(token == ""){
+            await jsRuntime.InvokeVoidAsync("alertwarning");
+        }
+        else{
+            _LocalStorageService.SetItem("jwttoken", token);
+            IsAuthenticated();
+        }
+    }
+
+    private async void Login()
+    {
+        ModelProject.JWT.LocalStorageService _LocalStorageService= new ModelProject.JWT.LocalStorageService(jsRuntime);
+        var token = usersApis.LoginUser(LoginUser);
+        if(token == ""){
+            await jsRuntime.InvokeVoidAsync("alertwarning");
+        }
+        else{
+            _LocalStorageService.SetItem("jwttoken", token);
+            IsAuthenticated();
+        }
+    }
+
+    private async void IsAuthenticated()
+    {
+        if(!String.IsNullOrEmpty(ModelProject.JWT.LocalStorageService.token) && ModelProject.JWT.LocalStorageService.token != ""){
+            IsAuthenticatedAtt=true;
+        }
+        else{
+            IsAuthenticatedAtt=false;
+        }
+    }
+
+    private async void LogOut()
+    {
+        usersApis= new ModelProject.CallingAPIs.UsersApis(jsRuntime);
+        usersApis.LogOut();
+        ModelProject.JWT.LocalStorageService.token = "";
+        IsAuthenticated();
+    }
+}

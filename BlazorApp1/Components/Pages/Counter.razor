@@ -1,0 +1,164 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+<style>
+h1{
+    background-color: coral;
+}
+</style>
+<script>
+    function alerto(){
+        alert('Done!');
+    }
+
+    function OpenPopupFunc(){
+        // Get the button that opens the modal
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+    }
+</script>
+
+<PageTitle>CRUD</PageTitle>
+@if(IsAuthenticatedAtt){
+   
+@*Insert*@
+<h1>Insert</h1>
+<input type ="Text" @bind="inputProductName"/>
+
+<button class="btn btn-primary" @onclick="InsertNewProduct">Insert</button>
+<hr/>
+
+
+@*Insert*@
+<h1>Delete</h1>
+<select @bind="idProductToDelete">
+    @if (listProducts == null)
+{
+    <p><em>No Product Availble</em></p>
+}
+else{
+    foreach (var pr in listProducts)
+    {
+        <option value="@pr.Id">@pr.Name</option>
+    }
+}
+</select>
+<button class="btn btn-primary" @onclick="DeleteProduct">Delete</button>
+<hr/>
+
+
+
+@*Grid*@
+<h1>GRID</h1>
+@if (listProducts == null)
+{
+    <p><em>No Product Availble</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Delete Action</th>
+                <th>Edit Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var pr in listProducts)
+            {
+                <tr>
+                    <td>@pr.Name</td>
+                    <td>@pr.CreatedUpdatedOn</td>
+                    <td><button class="btn deleteButton btn-primary" @onclick="@(() => DeleteProductGrid(pr.Id))" >Delete</button></td>
+                    <td><button class="btn editButton btn-primary" @onclick="@(() => OpenPopup(pr.Id))" >Edit</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@* <div>
+    <EventCallBackChild Parent="this"></EventCallBackChild>
+</div>
+ *@<EditPopup CurrentProduct=@productToEdit/>
+
+
+}
+
+@code {
+    private string currentName = "Test";
+    private string inputProductName { get; set; }
+    private string idProductToDelete { get; set; }
+    ModelProject.Product productToEdit = new ModelProject.Product();
+    @inject IJSRuntime jsRuntime
+    private List<ModelProject.Product> listProducts = new List<ModelProject.Product>();
+    ModelProject.Repo.Repository _Repository= new ModelProject.Repo.Repository();
+    ModelProject.CallingAPIs.UsersApis usersApis= new ModelProject.CallingAPIs.UsersApis();
+    bool IsAuthenticatedAtt = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        //For delete + Grid
+        usersApis= new ModelProject.CallingAPIs.UsersApis(jsRuntime);
+        IsAuthenticated();
+        listProducts = await usersApis.GetProducts();
+    }
+
+    //For Delete
+    private async void DeleteProduct()
+    {
+        _Repository.deleteProduct(idProductToDelete);
+        //Refresh Dropdown Delete
+        listProducts = _Repository.readProduct();
+        await jsRuntime.InvokeVoidAsync("alerto");
+    }
+
+    //For Insert
+    private async void InsertNewProduct()
+    {
+        ModelProject.Product newProduct= new ModelProject.Product(){
+            Name=inputProductName,
+            CreatedUpdatedOn = DateTime.Now
+        };
+        ModelProject.Repo.Repository _Repository= new ModelProject.Repo.Repository();
+        _Repository.insertProduct(newProduct);
+        //Refresh Dropdown Delete
+        listProducts = _Repository.readProduct();
+        await jsRuntime.InvokeVoidAsync("alerto");
+    }
+
+    //For Delete From GRID
+    async Task DeleteProductGrid(int Id)
+    {
+        _Repository.deleteProduct(Id.ToString());
+        //Refresh Dropdown Delete
+        listProducts = _Repository.readProduct();
+        await jsRuntime.InvokeVoidAsync("alerto");
+    }
+
+    //OpenPopup
+    async Task OpenPopup(int Id)
+    {
+        productToEdit=_Repository.getProduct(Id.ToString());
+        await jsRuntime.InvokeVoidAsync("OpenPopupFunc");
+    }
+
+    //Refresh Data
+    public async Task Refresh()
+    {
+        listProducts = _Repository.readProduct();
+        await jsRuntime.InvokeVoidAsync("alerto");
+    }
+
+    private async void IsAuthenticated()
+    {
+        if(!String.IsNullOrEmpty(ModelProject.JWT.LocalStorageService.token) && ModelProject.JWT.LocalStorageService.token != ""){
+            IsAuthenticatedAtt=true;
+        }
+        else{
+            IsAuthenticatedAtt=false;
+        }
+    }
+}
