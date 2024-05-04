@@ -13,9 +13,21 @@
         {
             _logger.LogInformation("Request received: {Method} {Path}", context.Request.Method, context.Request.Path);
 
+            //using (StreamWriter writer = new StreamWriter(@"C:\Users\skarim\Desktop\Samir\Result.txt"))
+            //{
+            //    writer.WriteLine("Start :");
+            //    writer.WriteLine("Request received: {Method} {Path}", context.Request.Method, context.Request.Path);
+            //}
+
             await next(context);
 
             _logger.LogInformation("Response sent: {StatusCode}", context.Response.StatusCode);
+
+            //using (StreamWriter writer = new StreamWriter(@"C:\Users\skarim\Desktop\Samir\Result.txt"))
+            //{
+            //    writer.WriteLine("End :");
+            //    writer.WriteLine("Response sent: {StatusCode}", context.Response.StatusCode);
+            //}
         }
     }
 }
