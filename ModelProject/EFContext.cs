@@ -19,7 +19,7 @@ namespace ModelProject
         public EFContext(DbContextOptions<EFContext> options)
             :base(options) { }
 
-        private const string connectiostring = "Server=***;Database=ForCRUD;Trusted_Connection=True;TrustServerCertificate=True";
+        private const string connectiostring = "Server=OUJ9ZLKN53\\SQLEXPRESS;Database=ForCRUD;Trusted_Connection=True;TrustServerCertificate=True";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

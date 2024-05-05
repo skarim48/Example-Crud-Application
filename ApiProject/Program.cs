@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Why this ? It's For using .Net core Identity. For Example : Signin function need Acces to Database.
 builder.Services.AddDbContext<ModelProject.EFContext>(options =>
-    options.UseSqlServer("Server=***;Database=ForCRUD;Trusted_Connection=True;TrustServerCertificate=True")
+    options.UseSqlServer("Server=OUJ9ZLKN53\\SQLEXPRESS;Database=ForCRUD;Trusted_Connection=True;TrustServerCertificate=True")
 );
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false
     )

@@ -1,0 +1,14 @@
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\bin\Release\net8.0\ModelProject.deps.json
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\bin\Release\net8.0\ModelProject.runtimeconfig.json
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\bin\Release\net8.0\ModelProject.dll
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\bin\Release\net8.0\ModelProject.pdb
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\obj\Release\net8.0\ModelProject.csproj.AssemblyReference.cache
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\obj\Release\net8.0\ModelProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\obj\Release\net8.0\ModelProject.AssemblyInfoInputs.cache
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\obj\Release\net8.0\ModelProject.AssemblyInfo.cs
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\obj\Release\net8.0\ModelProject.csproj.CoreCompileInputs.cache
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\obj\Release\net8.0\ModelProject.dll
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\obj\Release\net8.0\refint\ModelProject.dll
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\obj\Release\net8.0\ModelProject.pdb
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\obj\Release\net8.0\ModelProject.genruntimeconfig.cache
+C:\Users\skarim\Desktop\Samir SQLI\Projects\CRUD App core + Blazor\ModelProject\obj\Release\net8.0\ref\ModelProject.dll

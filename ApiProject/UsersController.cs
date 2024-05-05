@@ -119,8 +119,8 @@ namespace ApiProject
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userInfo.Result.UserName),
-                new Claim("fullName", userInfo.Result.Id.ToString()),
-                new Claim(ClaimTypes.Role, JWTPolicies.Admin),
+                new Claim("IdUser", userInfo.Result.Id.ToString()),
+                //new Claim(ClaimTypes.Role, JWTPolicies.Admin),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
             var token = new JwtSecurityToken(

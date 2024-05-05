@@ -1,6 +1,8 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -19,6 +21,24 @@ namespace ModelProject.JWT
     {
         private IJSRuntime _jsRuntime;
         public static string token = "";
+        public EFContext identityUserrepo = new EFContext();
+        public static IdentityUser currentUser {
+            get 
+            {
+                try
+                {
+                    ModelProject.Repo.Repository Repository = new ModelProject.Repo.Repository();
+                    return Repository.getCurrentUser(token);
+                }
+                catch (Exception ex)
+                {
+                }
+
+                return null;
+            }
+
+            set { } 
+        }
 
         public LocalStorageService(IJSRuntime jsRuntime)
         {
@@ -38,6 +58,7 @@ namespace ModelProject.JWT
         public async Task SetItem<T>(string key, T value)
         {
             token = value.ToString();
+            
             await _jsRuntime.InvokeVoidAsync("localStorage.setItem", key, value);
         }
 
@@ -51,4 +72,6 @@ namespace ModelProject.JWT
     {
         public string token { get; set; }
     }
+
+    
 }

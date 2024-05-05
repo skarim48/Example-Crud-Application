@@ -5204,11 +5204,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\skarim\\Desktop\\github\\CRUD App core + Blazor\\ModelProject\\ModelProject.csproj",
+      "projectUniqueName": "C:\\Users\\skarim\\Desktop\\Samir SQLI\\Projects\\CRUD App core + Blazor\\ModelProject\\ModelProject.csproj",
       "projectName": "ModelProject",
-      "projectPath": "C:\\Users\\skarim\\Desktop\\github\\CRUD App core + Blazor\\ModelProject\\ModelProject.csproj",
+      "projectPath": "C:\\Users\\skarim\\Desktop\\Samir SQLI\\Projects\\CRUD App core + Blazor\\ModelProject\\ModelProject.csproj",
       "packagesPath": "C:\\Users\\skarim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\skarim\\Desktop\\github\\CRUD App core + Blazor\\ModelProject\\obj\\",
+      "outputPath": "C:\\Users\\skarim\\Desktop\\Samir SQLI\\Projects\\CRUD App core + Blazor\\ModelProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\skarim\\AppData\\Roaming\\NuGet\\NuGet.Config",
