@@ -16,24 +16,27 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.Sign
     )
     .AddEntityFrameworkStores<ModelProject.EFContext>();
 
-// JWT
+// JWT : https://learn.microsoft.com/en-us/aspnet/core/security/authorization/limitingidentitybyscheme?view=aspnetcore-8.0
+
 var jwtIssuer = builder.Configuration.GetSection("jwt:Issuer").Get<string>();
 var jwtAudience = builder.Configuration.GetSection("jwt:Audience").Get<string>();
 var jwtKey = builder.Configuration.GetSection("jwt:key").Get<string>();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+    configureOptions:options =>
 {
     options.RequireHttpsMetadata = false;
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtIssuer,
-        ValidAudience = jwtAudience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
-        ClockSkew = TimeSpan.Zero
+        //ClockSkew = TimeSpan.Zero
     };
 });
 
